@@ -46,6 +46,18 @@ const handler = NextAuth({
 		strategy: "jwt",
 	},
 	secret: process.env.NEXTAUTH_SECRET,
+	callbacks: {
+		async session({ session }) {
+			const user = await dbUser.findOne({ email: session.user.email });
+			const userObj = {
+				email: user.email,
+				isAdmin: user.isAdmin,
+			};
+			session.user = userObj;
+
+			return session;
+		},
+	},
 });
 
 export { handler as GET, handler as POST };

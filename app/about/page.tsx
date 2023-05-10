@@ -12,7 +12,8 @@ export default function About() {
 		router.push("/login")
 	) : (
 		<main className="w-screen h-screen">
-			<Navbar />
+			{/* @ts-ignore */}
+			<Navbar isAdmin={session?.user.isAdmin} />
 			<div className="w-full p-20">
 				<h1 className="text-2xl font-bold">About</h1>
 				<p>

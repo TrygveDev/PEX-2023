@@ -12,12 +12,13 @@ export default function Profile() {
 		router.push("/login")
 	) : (
 		<main className="w-screen h-screen">
-			<Navbar />
+			{/* @ts-ignore */}
+			<Navbar isAdmin={session?.user.isAdmin} />
 			<div className="w-full p-20">
 				<h1 className="text-2xl font-bold">Profile</h1>
-				<p>Velkommen, {session?.user.email}</p>
+				<p className="text-lg mt-5">{session?.user.email}</p>
 				<button
-					className="border-2 border-black p-2 rounded"
+					className="border-2 mt-5 border-black p-2 rounded"
 					onClick={() => signOut({ callbackUrl: "/login" })}
 				>
 					Logg ut

@@ -9,11 +9,10 @@ if (mongoose.modelNames().includes("User")) {
 	dbUser = mongoose.model("User", userSchema);
 }
 
-mongoose.connect(process.env.MONGODB);
+mongoose.connect(process.env.DB_URL);
 
 export async function POST(request: Request) {
 	const body = await request.json();
-	console.log(body);
 	const { email, password } = body;
 
 	const hashedPassword = await bcrypt.hash(password, 10);

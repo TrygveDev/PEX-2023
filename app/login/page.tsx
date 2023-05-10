@@ -21,21 +21,21 @@ export default function Login() {
 						<h1 className="text-2xl font-bold">Opprett bruker</h1>
 						<div className="flex flex-col items-center justify-center gap-2">
 							<input
-								className="border-2 border-black rounded w-52 p-2"
+								className="border-2 border-black rounded w-52 p-2 focus:outline-none"
 								placeholder="Email"
 								type="text"
 								disabled={loading}
 								onChange={(e) => setEmail(e.target.value)}
 							/>
 							<input
-								className="border-2 border-black rounded w-52 p-2"
+								className="border-2 border-black rounded w-52 p-2 focus:outline-none"
 								placeholder="Password"
 								type="password"
 								disabled={loading}
 								onChange={(e) => setPassword(e.target.value)}
 							/>
 							<button
-								className="border-2 border-black p-2 w-52 rounded"
+								className="border-2 border-black p-2 w-52 rounded focus:outline-none"
 								disabled={loading}
 								onClick={() => {
 									setLoading(true);
@@ -46,11 +46,16 @@ export default function Login() {
 											password: password,
 										})
 										.then(() => {
-											alert("bruker laget");
+											toast.success(
+												"Bruker laget, logg inn!"
+											);
 											setIsRegistering(false);
 										})
 										.catch((err) => {
-											alert("error " + err);
+											toast.error(
+												"En intern feil oppstod!"
+											);
+											console.log(err);
 										})
 										.finally(() => {
 											setLoading(false);
@@ -72,21 +77,21 @@ export default function Login() {
 						<h1 className="text-2xl font-bold">Logg inn</h1>
 						<div className="flex flex-col gap-2">
 							<input
-								className="border-2 border-black rounded w-52 p-2"
+								className="border-2 border-black rounded w-52 p-2 focus:outline-none"
 								placeholder="Email"
 								type="text"
 								disabled={loading}
 								onChange={(e) => setEmail(e.target.value)}
 							/>
 							<input
-								className="border-2 border-black rounded w-52 p-2"
+								className="border-2 border-black rounded w-52 p-2 focus:outline-none"
 								placeholder="Password"
 								type="password"
 								disabled={loading}
 								onChange={(e) => setPassword(e.target.value)}
 							/>
 							<button
-								className="border-2 border-black p-2 w-52 rounded"
+								className="border-2 border-black p-2 w-52 rounded focus:outline-none"
 								disabled={loading}
 								onClick={() => {
 									setLoading(true);
@@ -99,7 +104,10 @@ export default function Login() {
 										setLoading(false);
 										console.log(callback);
 										if (callback.error) {
-											return toast.error(callback.error);
+											toast.error(
+												"En intern feil oppstod!"
+											);
+											return console.log(callback.error);
 										}
 										if (callback?.ok) {
 											toast.success(
