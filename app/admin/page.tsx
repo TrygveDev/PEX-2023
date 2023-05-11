@@ -50,16 +50,16 @@ export default function Admin() {
 				<div className="w-full flex flex-wrap overflow-y-scroll gap-8 pt-5">
 					{todos ? (
 						todos.map((todo, i) => (
-							<div key={i} className="flex flex-row gap-2">
-								<div className="w-96 h-fit flex flex-col rounded border-2 border-black p-3">
+							<div key={i} className="flex flex-row gap-2 h-fit">
+								<div className="w-96 h-fit flex flex-col rounded border-2 border-black p-3 overflow-hidden">
 									<div className="w-full h-full flex items-center">
 										{todo.todo}
 									</div>
 									<div className="w-full min-h-full flex items-center text-gray-400 text-sm">
-										<p>{todo.email}</p>
+										<p className="w-full">{todo.email}</p>
 									</div>
 								</div>
-								<div className="flex flex-col justify-between">
+								<div className="flex flex-col justify-evenly">
 									<FontAwesomeIcon
 										icon={faCheckCircle}
 										color="green"

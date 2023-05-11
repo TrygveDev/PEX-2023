@@ -56,11 +56,11 @@ const TodoItem = (props: Props) => {
 				<CircularProgress />
 			) : (
 				<>
-					<div className="w-full h-full flex items-center">
+					<div className="w-full h-full flex items-center overflow-hidden">
 						{props.todo.todo}
 					</div>
 					<div className="w-full min-h-full flex items-center text-gray-400 text-sm">
-						<p>{props.todo.email}</p>
+						<p className="w-full">{props.todo.email}</p>
 					</div>
 					{/* @ts-ignore */}
 					{(props.session?.user.isAdmin === true ||

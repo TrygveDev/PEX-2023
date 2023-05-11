@@ -49,6 +49,15 @@ const TodoModal = (props: Props) => {
 								className="border-2 border-black p-3 rounded w-fit focus:outline-none"
 								onClick={() => {
 									setLoading(true);
+									if (
+										todo.length === 0 ||
+										todo.length > 256
+									) {
+										setLoading(false);
+										return toast.error(
+											"For kort eller langt forslag!"
+										);
+									}
 									axios
 										.post("/api/createTodo", {
 											todo: todo,

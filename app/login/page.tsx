@@ -39,7 +39,18 @@ export default function Login() {
 								disabled={loading}
 								onClick={() => {
 									setLoading(true);
-									console.log(email, password);
+									const emailRegex =
+										/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+									if (!emailRegex.test(email)) {
+										setLoading(false);
+										return toast.error("Ugyldig email!");
+									}
+									if (password.length < 6) {
+										setLoading(false);
+										return toast.error(
+											"For svakt passord!"
+										);
+									}
 									axios
 										.post("/api/register", {
 											email: email,
@@ -95,7 +106,14 @@ export default function Login() {
 								disabled={loading}
 								onClick={() => {
 									setLoading(true);
-									console.log(email, password);
+
+									const emailRegex =
+										/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+									if (!emailRegex.test(email)) {
+										setLoading(false);
+										return toast.error("Ugyldig email!");
+									}
+
 									signIn("credentials", {
 										email: email,
 										password: password,
@@ -104,10 +122,9 @@ export default function Login() {
 										setLoading(false);
 										console.log(callback);
 										if (callback.error) {
-											toast.error(
-												"En intern feil oppstod!"
+											return toast.error(
+												"Feil email eller passord!"
 											);
-											return console.log(callback.error);
 										}
 										if (callback?.ok) {
 											toast.success(
