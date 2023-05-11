@@ -29,6 +29,7 @@ export default function Admin() {
 			.get("/api/unapprovedTodos")
 			.then((res: any) => {
 				setTodos(res.data);
+				console.log(res.data);
 			})
 			.catch((err: any) => {
 				toast.error(
