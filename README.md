@@ -1,4 +1,4 @@
-# PEX 2023
+# PEX 2023 - [Live Demo](https://pex-2023-s472.vercel.app/) 
 
 ### Funksjonelle krav: 
 
