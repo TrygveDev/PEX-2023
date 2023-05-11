@@ -2,7 +2,7 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Navbar from "./components/Navbar";
-import { faCirclePlus, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import TodoModal from "./components/TodoModal";
@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
+import TodoItem from "./components/TodoItem";
 
 type Todo = {
 	todo: string;
@@ -21,6 +22,7 @@ export default function Home() {
 	const { data: session, status } = useSession();
 	const [todoModalOpen, setTodoModalOpen] = useState(false);
 	const [todos, setTodos] = useState<Todo[]>();
+	const [loading, setLoading] = useState({ value: false, i: 0 });
 
 	useEffect(() => {
 		axios
@@ -56,6 +58,10 @@ export default function Home() {
 									Forslagskasse
 								</h1>
 								<p>Alle forslag som er godkjent av admin.</p>
+								<p>
+									Dine forslag er markert med grå kant og du
+									kan slette de når som helst.
+								</p>
 							</div>
 							<div>
 								<FontAwesomeIcon
@@ -69,63 +75,15 @@ export default function Home() {
 						<div className="w-full flex flex-wrap overflow-y-scroll gap-3 pt-5">
 							{todos ? (
 								todos.map((todo, i) => (
-									<div
+									<TodoItem
 										key={i}
-										className="w-96 h-fit flex flex-col rounded border-2 border-black p-3"
-									>
-										<div className="w-full h-full flex items-center">
-											{todo.todo}
-										</div>
-										<div className="w-full min-h-full flex items-center text-gray-400 text-sm">
-											<p>{todo.email}</p>
-										</div>
-										{/* @ts-ignore */}
-										{session?.user.isAdmin && (
-											<div className="w-96 h-fit flex items-center justify-end pr-5 absolute pointer-events-none">
-												<FontAwesomeIcon
-													icon={faCircleXmark}
-													color="red"
-													className="absolute pointer-events-auto"
-													onClick={() => {
-														axios
-															.post(
-																"/api/rejectTodo",
-																{
-																	todo: todo,
-																}
-															)
-															.then((res) => {
-																setTodos(
-																	(value) =>
-																		value.filter(
-																			(
-																				_,
-																				index
-																			) => {
-																				return (
-																					index !==
-																					i
-																				);
-																			}
-																		)
-																);
-																toast.success(
-																	"Forslaget ble fjernet!"
-																);
-															})
-															.catch((err) => {
-																console.log(
-																	err
-																);
-																toast.error(
-																	"En intern feil oppstod! Kunne ikke fjerne forslaget."
-																);
-															});
-													}}
-												/>
-											</div>
-										)}
-									</div>
+										todo={todo}
+										i={i}
+										session={session}
+										loading={loading}
+										setLoading={setLoading}
+										setTodos={setTodos}
+									/>
 								))
 							) : (
 								<CircularProgress />
